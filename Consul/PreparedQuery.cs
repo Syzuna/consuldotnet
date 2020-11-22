@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -58,6 +59,7 @@ namespace Consul
         /// TTL is the time to live for the served DNS results.
         /// </summary>
         //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(DurationTimespanConverter))]
         public TimeSpan? TTL { get; set; }
     }
 
@@ -215,6 +217,7 @@ namespace Consul
     {
         private class PreparedQueryCreationResult
         {
+            [JsonInclude]
             internal string ID { get; set; }
         }
         private readonly ConsulClient _client;
