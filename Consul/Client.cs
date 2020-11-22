@@ -20,7 +20,6 @@
 using System;
 using System.Net;
 using System.Net.Http;
-using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Security.Cryptography.X509Certificates;
 #if !(CORECLR || PORTABLE || PORTABLE40)
@@ -368,8 +367,6 @@ namespace Consul
         internal WebRequestHandler HttpHandler { get { return ConfigContainer.HttpHandler; } }
 #endif
         public ConsulClientConfiguration Config { get { return ConfigContainer.Config; } }
-
-        internal readonly JsonSerializer serializer = new JsonSerializer();
 
         #region New style config with Actions
         /// <summary>

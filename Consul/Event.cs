@@ -18,7 +18,6 @@
 
 using System.Globalization;
 using System.Linq;
-using Newtonsoft.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System;
@@ -44,7 +43,7 @@ namespace Consul
     {
         private class EventCreationResult
         {
-            [JsonProperty]
+            //[JsonProperty]
             internal string ID { get; set; }
         }
 

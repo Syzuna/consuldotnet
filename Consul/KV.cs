@@ -21,8 +21,8 @@ using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Consul
 {
@@ -30,7 +30,7 @@ namespace Consul
     /// KVPair is used to represent a single K/V entry
     /// </summary>
 
-    [JsonConverter(typeof(KVPairConverter))]
+    //[JsonConverter(typeof(KVPairConverter))]
     public class KVPair
     {
         public string Key { get; set; }
@@ -66,7 +66,7 @@ namespace Consul
         }
     }
 
-    [JsonConverter(typeof(KVTxnVerbTypeConverter))]
+    //[JsonConverter(typeof(KVTxnVerbTypeConverter))]
     public class KVTxnVerb : IEquatable<KVTxnVerb>
     {
         private static readonly KVTxnVerb kvSetOp = new KVTxnVerb() { Operation = "set" };
@@ -112,51 +112,51 @@ namespace Consul
         }
     }
 
-    public class KVTxnVerbTypeConverter : JsonConverter
-    {
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            serializer.Serialize(writer, ((KVTxnVerb)value).Operation);
-        }
+    //public class KVTxnVerbTypeConverter : JsonConverter
+    //{
+    //    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+    //    {
+    //        serializer.Serialize(writer, ((KVTxnVerb)value).Operation);
+    //    }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
-            JsonSerializer serializer)
-        {
-            var status = (string)serializer.Deserialize(reader, typeof(string));
-            switch (status)
-            {
-                case "set":
-                    return KVTxnVerb.Set;
-                case "delete":
-                    return KVTxnVerb.Delete;
-                case "delete-cas":
-                    return KVTxnVerb.DeleteCAS;
-                case "delete-tree":
-                    return KVTxnVerb.DeleteTree;
-                case "cas":
-                    return KVTxnVerb.CAS;
-                case "lock":
-                    return KVTxnVerb.Lock;
-                case "unlock":
-                    return KVTxnVerb.Unlock;
-                case "get":
-                    return KVTxnVerb.Get;
-                case "get-tree":
-                    return KVTxnVerb.GetTree;
-                case "check-session":
-                    return KVTxnVerb.CheckSession;
-                case "check-index":
-                    return KVTxnVerb.CheckIndex;
-                default:
-                    throw new ArgumentException("Invalid KVTxnOpType value during deserialization");
-            }
-        }
+    //    public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
+    //        JsonSerializer serializer)
+    //    {
+    //        var status = (string)serializer.Deserialize(reader, typeof(string));
+    //        switch (status)
+    //        {
+    //            case "set":
+    //                return KVTxnVerb.Set;
+    //            case "delete":
+    //                return KVTxnVerb.Delete;
+    //            case "delete-cas":
+    //                return KVTxnVerb.DeleteCAS;
+    //            case "delete-tree":
+    //                return KVTxnVerb.DeleteTree;
+    //            case "cas":
+    //                return KVTxnVerb.CAS;
+    //            case "lock":
+    //                return KVTxnVerb.Lock;
+    //            case "unlock":
+    //                return KVTxnVerb.Unlock;
+    //            case "get":
+    //                return KVTxnVerb.Get;
+    //            case "get-tree":
+    //                return KVTxnVerb.GetTree;
+    //            case "check-session":
+    //                return KVTxnVerb.CheckSession;
+    //            case "check-index":
+    //                return KVTxnVerb.CheckIndex;
+    //            default:
+    //                throw new ArgumentException("Invalid KVTxnOpType value during deserialization");
+    //        }
+    //    }
 
-        public override bool CanConvert(Type objectType)
-        {
-            return objectType == typeof(KVTxnVerb);
-        }
-    }
+    //    public override bool CanConvert(Type objectType)
+    //    {
+    //        return objectType == typeof(KVTxnVerb);
+    //    }
+    //}
 
     /// <summary>
     /// KVTxnOp defines a single operation inside a transaction.
@@ -183,9 +183,9 @@ namespace Consul
     {
         [JsonIgnore]
         public bool Success { get; internal set; }
-        [JsonProperty]
+        //[JsonProperty]
         public List<TxnError> Errors { get; internal set; }
-        [JsonProperty]
+        //[JsonProperty]
         public List<KVPair> Results { get; internal set; }
 
         public KVTxnResponse()

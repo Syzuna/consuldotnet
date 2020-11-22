@@ -82,7 +82,7 @@ namespace Consul
 
             if (response.IsSuccessStatusCode)
             {
-                result.Response = Deserialize<TOut>(ResponseStream);
+                result.Response = await Deserialize<TOut>(ResponseStream);
             }
 
             result.RequestTime = timer.Elapsed;

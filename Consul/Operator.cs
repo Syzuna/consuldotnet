@@ -16,7 +16,6 @@
 //  </copyright>
 // -----------------------------------------------------------------------
 
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -119,7 +118,7 @@ namespace Consul
         /// </summary>
         private class KeyringRequest
         {
-            [JsonProperty]
+            //[JsonProperty]
             internal string Key { get; set; }
         }
 

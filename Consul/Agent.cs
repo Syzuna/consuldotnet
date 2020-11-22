@@ -17,7 +17,6 @@
 //  </copyright>
 // -----------------------------------------------------------------------
 
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -80,41 +79,41 @@ namespace Consul
     /// <summary>
     /// TLS Status Convertor (to and from JSON)
     /// </summary>
-    public class TTLStatusConverter : JsonConverter
-    {
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            serializer.Serialize(writer, ((TTLStatus)value).Status);
-        }
+    //public class TTLStatusConverter : JsonConverter
+    //{
+    //    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+    //    {
+    //        serializer.Serialize(writer, ((TTLStatus)value).Status);
+    //    }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
-            JsonSerializer serializer)
-        {
-            var status = (string)serializer.Deserialize(reader, typeof(string));
-            switch (status)
-            {
-                case "pass":
-                    return TTLStatus.Pass;
-                case "passing":
-                    return TTLStatus.Pass;
-                case "warn":
-                    return TTLStatus.Warn;
-                case "warning":
-                    return TTLStatus.Warn;
-                case "fail":
-                    return TTLStatus.Critical;
-                case "critical":
-                    return TTLStatus.Critical;
-                default:
-                    throw new ArgumentException("Invalid TTL status value during deserialization");
-            }
-        }
+    //    public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
+    //        JsonSerializer serializer)
+    //    {
+    //        var status = (string)serializer.Deserialize(reader, typeof(string));
+    //        switch (status)
+    //        {
+    //            case "pass":
+    //                return TTLStatus.Pass;
+    //            case "passing":
+    //                return TTLStatus.Pass;
+    //            case "warn":
+    //                return TTLStatus.Warn;
+    //            case "warning":
+    //                return TTLStatus.Warn;
+    //            case "fail":
+    //                return TTLStatus.Critical;
+    //            case "critical":
+    //                return TTLStatus.Critical;
+    //            default:
+    //                throw new ArgumentException("Invalid TTL status value during deserialization");
+    //        }
+    //    }
 
-        public override bool CanConvert(Type objectType)
-        {
-            return objectType == typeof(TTLStatus);
-        }
-    }
+    //    public override bool CanConvert(Type objectType)
+    //    {
+    //        return objectType == typeof(TTLStatus);
+    //    }
+    //}
 
     /// <summary>
     /// AgentCheck represents a check known to the agent
@@ -125,7 +124,7 @@ namespace Consul
         public string CheckID { get; set; }
         public string Name { get; set; }
 
-        [JsonConverter(typeof(HealthStatusConverter))]
+        //[JsonConverter(typeof(HealthStatusConverter))]
         public HealthStatus Status { get; set; }
 
         public string Notes { get; set; }
@@ -177,31 +176,31 @@ namespace Consul
     /// </summary>
     public class AgentServiceRegistration
     {
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string ID { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string[] Tags { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public int Port { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Address { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public bool EnableTagOverride { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public AgentServiceCheck Check { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public AgentServiceCheck[] Checks { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public IDictionary<string, string> Meta { get; set; }
     }
 
@@ -210,7 +209,7 @@ namespace Consul
     /// </summary>
     public class AgentCheckRegistration : AgentServiceCheck
     {
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string ServiceID { get; set; }
     }
 
@@ -220,65 +219,65 @@ namespace Consul
     public class AgentServiceCheck
     {
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string ID { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Notes { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Script { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string[] Args { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string DockerContainerID { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Shell { get; set; } // Only supported for Docker.
 
-        [JsonConverter(typeof(DurationTimespanConverter))]
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonConverter(typeof(DurationTimespanConverter))]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public TimeSpan? Interval { get; set; }
 
-        [JsonConverter(typeof(DurationTimespanConverter))]
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonConverter(typeof(DurationTimespanConverter))]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public TimeSpan? Timeout { get; set; }
 
-        [JsonConverter(typeof(DurationTimespanConverter))]
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonConverter(typeof(DurationTimespanConverter))]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public TimeSpan? TTL { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string HTTP { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public Dictionary<string, List<string>> Header { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Method { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Body { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string TCP { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        [JsonConverter(typeof(HealthStatusConverter))]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonConverter(typeof(HealthStatusConverter))]
         public HealthStatus Status { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public bool TLSSkipVerify { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string GRPC { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public bool GRPCUseTLS { get; set; }
 
         /// <summary>
@@ -289,8 +288,8 @@ namespace Consul
         /// then its associated service (and all of its associated checks) will
         /// automatically be deregistered.
         /// </summary>
-        [JsonConverter(typeof(DurationTimespanConverter))]
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonConverter(typeof(DurationTimespanConverter))]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public TimeSpan? DeregisterCriticalServiceAfter { get; set; }
     }
 

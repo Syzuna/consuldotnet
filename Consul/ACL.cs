@@ -17,7 +17,6 @@
 //  </copyright>
 // -----------------------------------------------------------------------
 
-using Newtonsoft.Json;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -78,48 +77,48 @@ namespace Consul
         }
     }
 
-    [Obsolete("The Legacy ACL system has been deprecated, please use Token, Role and Policy instead.")]
-    public class ACLTypeConverter : JsonConverter
-    {
-#pragma warning disable CS0809 // Obsolete member 'ACLType.Equals(object)' overrides non-obsolete member
-        [Obsolete("The Legacy ACL system has been deprecated, please use Token, Role and Policy instead.")]
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-#pragma warning restore CS0809 // Obsolete member 'ACLType.Equals(object)' overrides non-obsolete member
-        {
-            serializer.Serialize(writer, ((ACLType)value).Type);
-        }
+//    [Obsolete("The Legacy ACL system has been deprecated, please use Token, Role and Policy instead.")]
+//    public class ACLTypeConverter : JsonConverter
+//    {
+//#pragma warning disable CS0809 // Obsolete member 'ACLType.Equals(object)' overrides non-obsolete member
+//        [Obsolete("The Legacy ACL system has been deprecated, please use Token, Role and Policy instead.")]
+//        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+//#pragma warning restore CS0809 // Obsolete member 'ACLType.Equals(object)' overrides non-obsolete member
+//        {
+//            serializer.Serialize(writer, ((ACLType)value).Type);
+//        }
 
-#pragma warning disable CS0809 // Obsolete member 'ACLType.Equals(object)' overrides non-obsolete member
-        [Obsolete("The Legacy ACL system has been deprecated, please use Token, Role and Policy instead.")]
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
-            JsonSerializer serializer)
-#pragma warning restore CS0809 // Obsolete member 'ACLType.Equals(object)' overrides non-obsolete member
-        {
-            var type = (string)serializer.Deserialize(reader, typeof(string));
-            switch (type)
-            {
-                case "client":
-                    return ACLType.Client;
-                case "management":
-                    return ACLType.Management;
-                default:
-                    throw new ArgumentOutOfRangeException("serializer", type,
-                        "Unknown ACL token type value found during deserialization");
-            }
-        }
+//#pragma warning disable CS0809 // Obsolete member 'ACLType.Equals(object)' overrides non-obsolete member
+//        [Obsolete("The Legacy ACL system has been deprecated, please use Token, Role and Policy instead.")]
+//        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
+//            JsonSerializer serializer)
+//#pragma warning restore CS0809 // Obsolete member 'ACLType.Equals(object)' overrides non-obsolete member
+//        {
+//            var type = (string)serializer.Deserialize(reader, typeof(string));
+//            switch (type)
+//            {
+//                case "client":
+//                    return ACLType.Client;
+//                case "management":
+//                    return ACLType.Management;
+//                default:
+//                    throw new ArgumentOutOfRangeException("serializer", type,
+//                        "Unknown ACL token type value found during deserialization");
+//            }
+//        }
 
-#pragma warning disable CS0809 // Obsolete member 'ACLType.Equals(object)' overrides non-obsolete member
-        [Obsolete("The Legacy ACL system has been deprecated, please use Token, Role and Policy instead.")]
-        public override bool CanConvert(Type objectType)
-#pragma warning restore CS0809 // Obsolete member 'ACLType.Equals(object)' overrides non-obsolete member
-        {
-            if (objectType == typeof(ACLType))
-            {
-                return true;
-            }
-            return false;
-        }
-    }
+//#pragma warning disable CS0809 // Obsolete member 'ACLType.Equals(object)' overrides non-obsolete member
+//        [Obsolete("The Legacy ACL system has been deprecated, please use Token, Role and Policy instead.")]
+//        public override bool CanConvert(Type objectType)
+//#pragma warning restore CS0809 // Obsolete member 'ACLType.Equals(object)' overrides non-obsolete member
+//        {
+//            if (objectType == typeof(ACLType))
+//            {
+//                return true;
+//            }
+//            return false;
+//        }
+//    }
 
     /// <summary>
     /// [Deprecated] ACLEntry is used to represent an ACL entry (Legacy Token)
@@ -136,9 +135,9 @@ namespace Consul
         [Obsolete("The Legacy ACL system has been deprecated, please use Token, Role and Policy instead.")]
         public string Name { get; set; }
 
-        [Obsolete("The Legacy ACL system has been deprecated, please use Token, Role and Policy instead.")]
-        [JsonConverter(typeof(ACLTypeConverter))]
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[Obsolete("The Legacy ACL system has been deprecated, please use Token, Role and Policy instead.")]
+        //[JsonConverter(typeof(ACLTypeConverter))]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public ACLType Type { get; set; }
 
         [Obsolete("The Legacy ACL system has been deprecated, please use Token, Role and Policy instead.")]
@@ -193,7 +192,7 @@ namespace Consul
 
         private class ACLCreationResult
         {
-            [JsonProperty]
+            //[JsonProperty]
             internal string ID { get; set; }
         }
 

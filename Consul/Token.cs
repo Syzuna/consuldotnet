@@ -16,7 +16,6 @@
 //  </copyright>
 // -----------------------------------------------------------------------
 
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -29,19 +28,14 @@ namespace Consul
     /// </summary>
     public class TokenEntry
     {
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string AccessorID { get; set; }
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string SecretID { get; set; }
         public string Description { get; set; }
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public PolicyLink[] Policies { get; set; }
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public RoleLink[] Roles { get; set; }
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public ServiceIdentity[] ServiceIdentities { get; set; }
         public bool Local { get; set; }
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string AuthMethod { get; set; }
 
 
@@ -104,13 +98,10 @@ namespace Consul
 
         private class TokenActionResult : TokenEntry
         {
-            [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+            //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
             public DateTime? CreateTime { get; set; }
-            [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
             public string Hash { get; set; }
-            [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
             public ulong CreateIndex { get; set; }
-            [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
             public ulong ModifyIndex { get; set; }
         }
 

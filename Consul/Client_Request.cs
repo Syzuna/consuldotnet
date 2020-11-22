@@ -21,7 +21,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Threading.Tasks;
+
 #if !(CORECLR || PORTABLE || PORTABLE40)
     using System.Security.Permissions;
     using System.Runtime.Serialization;
@@ -106,20 +108,23 @@ namespace Consul
             return builder.Uri;
         }
 
-        protected TOut Deserialize<TOut>(Stream stream)
+        protected async Task<TOut> Deserialize<TOut>(Stream stream)
         {
-            using (var reader = new StreamReader(stream))
-            {
-                using (var jsonReader = new JsonTextReader(reader))
-                {
-                    return Client.serializer.Deserialize<TOut>(jsonReader);
-                }
-            }
+            return await JsonSerializer.DeserializeAsync<TOut>(stream);
+
+            //using (var reader = new StreamReader(stream))
+            //{
+            //    using (var jsonReader = new JsonTextReader(reader))
+            //    {
+            //        return Client.serializer.Deserialize<TOut>(jsonReader);
+            //    }
+            //}
         }
 
         protected byte[] Serialize(object value)
         {
-            return System.Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(value));
+            return JsonSerializer.SerializeToUtf8Bytes(value);
+            //return System.Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(value));
         }
     }
 }

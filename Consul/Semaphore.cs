@@ -20,9 +20,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 #if !(CORECLR || PORTABLE || PORTABLE40)
 using System.Security.Permissions;
 using System.Runtime.Serialization;
@@ -201,7 +201,6 @@ namespace Consul
         {
             private int _limit;
 
-            [JsonProperty]
             internal int Limit
             {
                 get { return _limit; }
@@ -218,7 +217,6 @@ namespace Consul
                 }
             }
 
-            [JsonProperty]
             internal Dictionary<string, bool> Holders { get; set; }
 
             internal SemaphoreLock()
@@ -709,7 +707,7 @@ namespace Consul
                 return new SemaphoreLock() { Limit = Opts.Limit };
             }
 
-            return JsonConvert.DeserializeObject<SemaphoreLock>(Encoding.UTF8.GetString(pair.Value));
+            return JsonSerializer.Deserialize<SemaphoreLock>(Encoding.UTF8.GetString(pair.Value));
         }
 
         /// <summary>
@@ -720,7 +718,7 @@ namespace Consul
         /// <returns>A K/V pair with the lock data encoded in the Value field</returns>
         private KVPair EncodeLock(SemaphoreLock l, ulong oldIndex)
         {
-            var jsonValue = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(l));
+            var jsonValue = JsonSerializer.SerializeToUtf8Bytes(l);
 
             return new KVPair(string.Join("/", Opts.Prefix, DefaultSemaphoreKey))
             {

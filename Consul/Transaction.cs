@@ -16,7 +16,6 @@
 //  </copyright>
 // -----------------------------------------------------------------------
 
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,17 +35,13 @@ namespace Consul
    
     public class TxnError
     {
-        [JsonProperty]
         public int OpIndex { get; private set; }
-        [JsonProperty]
         public string What { get; private set; }
     }
 
     internal class TxnResponse
     {
-        [JsonProperty]
         internal List<TxnResult> Results { get; set; }
-        [JsonProperty]
         internal List<TxnError> Errors { get; set; }
     }
 }

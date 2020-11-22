@@ -16,7 +16,6 @@
 //  </copyright>
 // -----------------------------------------------------------------------
 
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -31,9 +30,9 @@ namespace Consul
     {
         public string Name { get; set; }
         public string Type { get; set; }
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Description { get; set; }
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public Dictionary<string,string> Config { get; set; }
 
         public bool ShouldSerializeCreateIndex()
@@ -79,9 +78,9 @@ namespace Consul
 
         private class AuthMethodActionResult : AuthMethodEntry
         {
-            [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+            //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
             public ulong CreateIndex { get; set; }
-            [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+            //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
             public ulong ModifyIndex { get; set; }
         }
 

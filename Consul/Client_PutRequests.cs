@@ -81,7 +81,7 @@ namespace Consul
 
             if (response.IsSuccessStatusCode)
             {
-                result.Response = Deserialize<TOut>(ResponseStream);
+                result.Response = await Deserialize<TOut>(ResponseStream);
             }
 
             result.RequestTime = timer.Elapsed;
@@ -362,7 +362,7 @@ namespace Consul
                 // Special case for KV txn operations
                 (response.StatusCode == HttpStatusCode.Conflict && typeof(TOut) == typeof(TxnResponse)))
             {
-                result.Response = Deserialize<TOut>(ResponseStream);
+                result.Response = await Deserialize<TOut>(ResponseStream);
             }
 
             result.RequestTime = timer.Elapsed;

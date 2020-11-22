@@ -20,7 +20,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using System.Net;
 using System.Runtime.Serialization;
 
@@ -61,33 +60,33 @@ namespace Consul
         }
     }
 
-    public class SessionBehaviorConverter : JsonConverter
-    {
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            serializer.Serialize(writer, ((SessionBehavior)value).Behavior);
-        }
+    //public class SessionBehaviorConverter : JsonConverter
+    //{
+    //    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+    //    {
+    //        serializer.Serialize(writer, ((SessionBehavior)value).Behavior);
+    //    }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
-            JsonSerializer serializer)
-        {
-            var behavior = (string)serializer.Deserialize(reader, typeof(string));
-            switch (behavior)
-            {
-                case "release":
-                    return SessionBehavior.Release;
-                case "delete":
-                    return SessionBehavior.Delete;
-                default:
-                    throw new ArgumentException("Unknown session behavior value during deserialization");
-            }
-        }
+    //    public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
+    //        JsonSerializer serializer)
+    //    {
+    //        var behavior = (string)serializer.Deserialize(reader, typeof(string));
+    //        switch (behavior)
+    //        {
+    //            case "release":
+    //                return SessionBehavior.Release;
+    //            case "delete":
+    //                return SessionBehavior.Delete;
+    //            default:
+    //                throw new ArgumentException("Unknown session behavior value during deserialization");
+    //        }
+    //    }
 
-        public override bool CanConvert(Type objectType)
-        {
-            return objectType == typeof(SessionBehavior);
-        }
-    }
+    //    public override bool CanConvert(Type objectType)
+    //    {
+    //        return objectType == typeof(SessionBehavior);
+    //    }
+    //}
 
 #if !(CORECLR || PORTABLE || PORTABLE40)
     [Serializable]
@@ -126,24 +125,24 @@ namespace Consul
 
         public string ID { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Node { get; set; }
 
         public List<string> Checks { get; set; }
 
-        [JsonConverter(typeof(NanoSecTimespanConverter))]
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonConverter(typeof(NanoSecTimespanConverter))]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public TimeSpan? LockDelay { get; set; }
 
-        [JsonConverter(typeof(SessionBehaviorConverter))]
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonConverter(typeof(SessionBehaviorConverter))]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public SessionBehavior Behavior { get; set; }
 
-        [JsonConverter(typeof(DurationTimespanConverter))]
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //[JsonConverter(typeof(DurationTimespanConverter))]
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public TimeSpan? TTL { get; set; }
 
         public SessionEntry()
@@ -174,7 +173,6 @@ namespace Consul
     {
         private class SessionCreationResult
         {
-            [JsonProperty]
             internal string ID { get; set; }
         }
 
