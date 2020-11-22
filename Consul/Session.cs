@@ -157,7 +157,7 @@ namespace Consul
 
         public List<string> Checks { get; set; }
 
-        //[JsonConverter(typeof(NanoSecTimespanConverter))]
+        [JsonConverter(typeof(NanoSecTimespanConverter))]
         //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public TimeSpan? LockDelay { get; set; }
 
@@ -165,7 +165,7 @@ namespace Consul
         //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public SessionBehavior Behavior { get; set; }
 
-        //[JsonConverter(typeof(DurationTimespanConverter))]
+        [JsonConverter(typeof(DurationTimespanConverter))]
         //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public TimeSpan? TTL { get; set; }
 

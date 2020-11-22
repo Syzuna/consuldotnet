@@ -23,6 +23,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections;
+using System.Text.Json.Serialization;
 
 namespace Consul
 {
@@ -240,15 +241,15 @@ namespace Consul
         //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Shell { get; set; } // Only supported for Docker.
 
-        //[JsonConverter(typeof(DurationTimespanConverter))]
+        [JsonConverter(typeof(DurationTimespanConverter))]
         //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public TimeSpan? Interval { get; set; }
 
-        //[JsonConverter(typeof(DurationTimespanConverter))]
+        [JsonConverter(typeof(DurationTimespanConverter))]
         //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public TimeSpan? Timeout { get; set; }
 
-        //[JsonConverter(typeof(DurationTimespanConverter))]
+        [JsonConverter(typeof(DurationTimespanConverter))]
         //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public TimeSpan? TTL { get; set; }
 
@@ -288,7 +289,7 @@ namespace Consul
         /// then its associated service (and all of its associated checks) will
         /// automatically be deregistered.
         /// </summary>
-        //[JsonConverter(typeof(DurationTimespanConverter))]
+        [JsonConverter(typeof(DurationTimespanConverter))]
         //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public TimeSpan? DeregisterCriticalServiceAfter { get; set; }
     }

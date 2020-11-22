@@ -85,6 +85,20 @@ namespace Consul
     //    }
     //}
 
+    public class DurationTimespanConverter : JsonConverter<TimeSpan?>
+    {
+        public override TimeSpan? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            return Extensions.FromGoDuration(reader.GetString());
+        }
+
+        public override void Write(Utf8JsonWriter writer, TimeSpan? value, JsonSerializerOptions options)
+        {
+            if (value.HasValue)
+                writer.WriteString("ttl", value.Value.ToGoDuration());
+        }
+    }
+
     //public class KVPairConverter : JsonConverter
     //{
     //    static Lazy<string[]> objProps = new Lazy<string[]>(() => typeof(KVPair).GetRuntimeProperties().Select(p => p.Name).ToArray());
