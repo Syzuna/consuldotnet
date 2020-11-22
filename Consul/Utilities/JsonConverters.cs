@@ -25,29 +25,6 @@ using System.Text.Json.Serialization;
 
 namespace Consul
 {
-    //public class NanoSecTimespanConverter : JsonConverter
-    //{
-    //    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-    //    {
-    //        serializer.Serialize(writer, (long)((TimeSpan)value).TotalMilliseconds * 1000000, typeof(long));
-    //    }
-
-    //    public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
-    //        JsonSerializer serializer)
-    //    {
-    //        return Extensions.FromGoDuration((string)serializer.Deserialize(reader, typeof(string)));
-    //    }
-
-    //    public override bool CanConvert(Type objectType)
-    //    {
-    //        if (objectType == typeof(TimeSpan))
-    //        {
-    //            return true;
-    //        }
-    //        return false;
-    //    }
-    //}
-
     public class NanoSecTimespanConverter : JsonConverter<TimeSpan?>
     {
         public override TimeSpan? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -58,32 +35,9 @@ namespace Consul
         public override void Write(Utf8JsonWriter writer, TimeSpan? value, JsonSerializerOptions options)
         {
             if (value.HasValue)
-                writer.WriteNumber("ttl", (long)(value.Value).TotalMilliseconds * 1000000);
+                writer.WriteNumberValue((long)value.Value.TotalMilliseconds * 1000000);
         }
     }
-
-    //public class DurationTimespanConverter : JsonConverter
-    //{
-    //    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-    //    {
-    //        serializer.Serialize(writer, ((TimeSpan)value).ToGoDuration());
-    //    }
-
-    //    public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
-    //        JsonSerializer serializer)
-    //    {
-    //        return Extensions.FromGoDuration((string)serializer.Deserialize(reader, typeof(string)));
-    //    }
-
-    //    public override bool CanConvert(Type objectType)
-    //    {
-    //        if (objectType == typeof(TimeSpan))
-    //        {
-    //            return true;
-    //        }
-    //        return false;
-    //    }
-    //}
 
     public class DurationTimespanConverter : JsonConverter<TimeSpan?>
     {
@@ -95,7 +49,7 @@ namespace Consul
         public override void Write(Utf8JsonWriter writer, TimeSpan? value, JsonSerializerOptions options)
         {
             if (value.HasValue)
-                writer.WriteString("ttl", value.Value.ToGoDuration());
+                writer.WriteStringValue(value.Value.ToGoDuration());
         }
     }
 

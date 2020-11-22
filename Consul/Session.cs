@@ -108,7 +108,7 @@ namespace Consul
 
         public override void Write(Utf8JsonWriter writer, SessionBehavior value, JsonSerializerOptions options)
         {
-            writer.WriteString("sessionBehavior", value.Behavior);
+            writer.WriteStringValue(value.Behavior);
         }
     }
 
