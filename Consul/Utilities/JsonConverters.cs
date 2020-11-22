@@ -20,6 +20,8 @@ using System;
 using System.Reflection;
 using System.Linq;
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Consul
 {
@@ -45,6 +47,20 @@ namespace Consul
     //        return false;
     //    }
     //}
+
+    public class NanoSecTimespanConverter : JsonConverter<TimeSpan?>
+    {
+        public override TimeSpan? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            return Extensions.FromGoDuration(reader.GetString());
+        }
+
+        public override void Write(Utf8JsonWriter writer, TimeSpan? value, JsonSerializerOptions options)
+        {
+            if (value.HasValue)
+                writer.WriteNumber("ttl", (long)(value.Value).TotalMilliseconds * 1000000);
+        }
+    }
 
     //public class DurationTimespanConverter : JsonConverter
     //{

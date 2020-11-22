@@ -22,6 +22,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Net;
 using System.Runtime.Serialization;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Consul
 {
@@ -88,6 +90,28 @@ namespace Consul
     //    }
     //}
 
+    public class SessionBehaviorConverter : JsonConverter<SessionBehavior>
+    {
+        public override SessionBehavior Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            var behavior = reader.GetString();
+            switch (behavior)
+            {
+                case "release":
+                    return SessionBehavior.Release;
+                case "delete":
+                    return SessionBehavior.Delete;
+                default:
+                    throw new ArgumentException("Unknown session behavior value during deserialization");
+            }
+        }
+
+        public override void Write(Utf8JsonWriter writer, SessionBehavior value, JsonSerializerOptions options)
+        {
+            writer.WriteString("sessionBehavior", value.Behavior);
+        }
+    }
+
 #if !(CORECLR || PORTABLE || PORTABLE40)
     [Serializable]
 #endif
@@ -137,7 +161,7 @@ namespace Consul
         //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public TimeSpan? LockDelay { get; set; }
 
-        //[JsonConverter(typeof(SessionBehaviorConverter))]
+        [JsonConverter(typeof(SessionBehaviorConverter))]
         //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public SessionBehavior Behavior { get; set; }
 
