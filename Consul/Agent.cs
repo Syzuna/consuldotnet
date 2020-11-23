@@ -23,6 +23,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Consul
@@ -30,6 +31,7 @@ namespace Consul
     /// <summary>
     /// The status of a TTL check
     /// </summary>
+    [JsonConverter(typeof(TTLStatusConverter))]
     public class TTLStatus : IEquatable<TTLStatus>
     {
         private static readonly TTLStatus passingStatus = new TTLStatus() { Status = "passing", LegacyStatus = "pass" };
@@ -77,44 +79,35 @@ namespace Consul
         }
     }
 
-    /// <summary>
-    /// TLS Status Convertor (to and from JSON)
-    /// </summary>
-    //public class TTLStatusConverter : JsonConverter
-    //{
-    //    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-    //    {
-    //        serializer.Serialize(writer, ((TTLStatus)value).Status);
-    //    }
+    public class TTLStatusConverter : JsonConverter<TTLStatus>
+    {
+        public override TTLStatus Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            var status = reader.GetString();
+            switch (status)
+            {
+                case "pass":
+                    return TTLStatus.Pass;
+                case "passing":
+                    return TTLStatus.Pass;
+                case "warn":
+                    return TTLStatus.Warn;
+                case "warning":
+                    return TTLStatus.Warn;
+                case "fail":
+                    return TTLStatus.Critical;
+                case "critical":
+                    return TTLStatus.Critical;
+                default:
+                    throw new ArgumentException("Invalid TTL status value during deserialization");
+            }
+        }
 
-    //    public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
-    //        JsonSerializer serializer)
-    //    {
-    //        var status = (string)serializer.Deserialize(reader, typeof(string));
-    //        switch (status)
-    //        {
-    //            case "pass":
-    //                return TTLStatus.Pass;
-    //            case "passing":
-    //                return TTLStatus.Pass;
-    //            case "warn":
-    //                return TTLStatus.Warn;
-    //            case "warning":
-    //                return TTLStatus.Warn;
-    //            case "fail":
-    //                return TTLStatus.Critical;
-    //            case "critical":
-    //                return TTLStatus.Critical;
-    //            default:
-    //                throw new ArgumentException("Invalid TTL status value during deserialization");
-    //        }
-    //    }
-
-    //    public override bool CanConvert(Type objectType)
-    //    {
-    //        return objectType == typeof(TTLStatus);
-    //    }
-    //}
+        public override void Write(Utf8JsonWriter writer, TTLStatus value, JsonSerializerOptions options)
+        {
+            writer.WriteStringValue(value.Status);
+        }
+    }
 
     /// <summary>
     /// AgentCheck represents a check known to the agent
@@ -125,7 +118,7 @@ namespace Consul
         public string CheckID { get; set; }
         public string Name { get; set; }
 
-        //[JsonConverter(typeof(HealthStatusConverter))]
+        [JsonConverter(typeof(HealthStatusConverter))]
         public HealthStatus Status { get; set; }
 
         public string Notes { get; set; }
@@ -269,7 +262,7 @@ namespace Consul
         public string TCP { get; set; }
 
         //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        //[JsonConverter(typeof(HealthStatusConverter))]
+        [JsonConverter(typeof(HealthStatusConverter))]
         public HealthStatus Status { get; set; }
 
         //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
