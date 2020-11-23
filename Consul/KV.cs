@@ -49,6 +49,7 @@ namespace Consul
             Key = key;
         }
 
+        [JsonConstructor]
         internal KVPair() { }
         internal void Validate()
         {
@@ -178,9 +179,9 @@ namespace Consul
     {
         [JsonIgnore]
         public bool Success { get; internal set; }
-        //[JsonProperty]
+        [JsonInclude]
         public List<TxnError> Errors { get; internal set; }
-        //[JsonProperty]
+        [JsonInclude]
         public List<KVPair> Results { get; internal set; }
 
         public KVTxnResponse()
