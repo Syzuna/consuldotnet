@@ -215,10 +215,10 @@ namespace Consul
 
     public class PreparedQuery : IPreparedQueryEndpoint
     {
-        private class PreparedQueryCreationResult
+        public class PreparedQueryCreationResult
         {
             [JsonInclude]
-            internal string ID { get; set; }
+            public string ID { get; internal set; }
         }
         private readonly ConsulClient _client;
 
