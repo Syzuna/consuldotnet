@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 #if !(CORECLR || PORTABLE || PORTABLE40)
@@ -197,14 +198,15 @@ namespace Consul
         /// <summary>
         /// SemaphoreLock is written under the DefaultSemaphoreKey and is used to coordinate between all the contenders.
         /// </summary>
-        private class SemaphoreLock
+        public class SemaphoreLock
         {
             private int _limit;
 
-            internal int Limit
+            [JsonInclude]
+            public int Limit
             {
                 get { return _limit; }
-                set
+                 internal set
                 {
                     if (value > 0)
                     {
@@ -217,8 +219,10 @@ namespace Consul
                 }
             }
 
-            internal Dictionary<string, bool> Holders { get; set; }
-
+            [JsonInclude]
+            public Dictionary<string, bool> Holders { get; internal set; }
+            
+            [JsonConstructor]
             internal SemaphoreLock()
             {
                 Holders = new Dictionary<string, bool>();
