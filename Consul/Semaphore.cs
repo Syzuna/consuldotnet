@@ -223,7 +223,7 @@ namespace Consul
             public Dictionary<string, bool> Holders { get; internal set; }
             
             [JsonConstructor]
-            internal SemaphoreLock()
+            public SemaphoreLock()
             {
                 Holders = new Dictionary<string, bool>();
             }

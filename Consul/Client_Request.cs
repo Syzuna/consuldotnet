@@ -110,21 +110,18 @@ namespace Consul
 
         protected async Task<TOut> Deserialize<TOut>(Stream stream)
         {
-            return await JsonSerializer.DeserializeAsync<TOut>(stream);
-
-            //using (var reader = new StreamReader(stream))
-            //{
-            //    using (var jsonReader = new JsonTextReader(reader))
-            //    {
-            //        return Client.serializer.Deserialize<TOut>(jsonReader);
-            //    }
-            //}
+            return await JsonSerializer.DeserializeAsync<TOut>(stream, new JsonSerializerOptions
+            {
+                IgnoreNullValues = true
+            });
         }
 
         protected byte[] Serialize(object value)
         {
-            return JsonSerializer.SerializeToUtf8Bytes(value);
-            //return System.Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(value));
+            return JsonSerializer.SerializeToUtf8Bytes(value, new JsonSerializerOptions
+            {
+                IgnoreNullValues = true
+            });
         }
     }
 }
