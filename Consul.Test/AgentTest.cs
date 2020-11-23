@@ -50,7 +50,7 @@ namespace Consul.Test
             var info = await _client.Agent.Self();
 
             Assert.NotNull(info);
-            Assert.False(string.IsNullOrEmpty(info.Response["Config"]["NodeName"]));
+            Assert.False(string.IsNullOrEmpty(info.Response["Config"]["NodeName"].ToString()));
             Assert.False(string.IsNullOrEmpty(info.Response["Member"]["Tags"]["bootstrap"].ToString()));
         }
 
