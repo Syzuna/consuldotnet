@@ -42,10 +42,10 @@ namespace Consul
 
     public class Event : IEventEndpoint
     {
-        private class EventCreationResult
+        public class EventCreationResult
         {
             [JsonInclude]
-            internal string ID { get; set; }
+            public string ID { get; internal set; }
         }
 
         private readonly ConsulClient _client;

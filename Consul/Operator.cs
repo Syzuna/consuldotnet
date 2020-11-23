@@ -117,10 +117,10 @@ namespace Consul
         /// <summary>
         /// KeyringRequest is used for performing Keyring operations
         /// </summary>
-        private class KeyringRequest
+        public class KeyringRequest
         {
             [JsonInclude]
-            internal string Key { get; set; }
+            public string Key { get; internal set; }
         }
 
         /// <summary>
