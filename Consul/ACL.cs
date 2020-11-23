@@ -178,10 +178,10 @@ namespace Consul
             _client = c;
         }
 
-        private class ACLCreationResult
+        public class ACLCreationResult
         {
-            //[JsonProperty]
-            internal string ID { get; set; }
+            [JsonInclude]
+            public string ID { get; internal set; }
         }
 
         /// <summary>
