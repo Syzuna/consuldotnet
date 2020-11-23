@@ -50,7 +50,8 @@ namespace Consul
         }
 
         [JsonConstructor]
-        internal KVPair() { }
+        public KVPair() { }
+
         internal void Validate()
         {
             ValidatePath(Key);
