@@ -20,6 +20,7 @@ using System;
 using System.Reflection;
 using System.Linq;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -29,7 +30,12 @@ namespace Consul
     {
         public override TimeSpan? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            return Extensions.FromGoDuration(reader.GetString());
+            if (reader.TryGetUInt64(out var ulongValue))
+                return Extensions.FromGoDuration(ulongValue.ToString());
+            if (reader.TryGetDouble(out var doubleValue))
+                return Extensions.FromGoDuration(doubleValue.ToString(CultureInfo.InvariantCulture));
+
+            return TimeSpan.Zero;
         }
 
         public override void Write(Utf8JsonWriter writer, TimeSpan? value, JsonSerializerOptions options)
