@@ -167,9 +167,10 @@ namespace Consul
     /// </summary>
     public class Session : ISessionEndpoint
     {
-        private class SessionCreationResult
+        public class SessionCreationResult
         {
-            internal string ID { get; set; }
+            [JsonInclude]
+            public string ID { get; internal set; }
         }
 
         private readonly ConsulClient _client;
