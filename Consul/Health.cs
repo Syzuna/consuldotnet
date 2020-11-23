@@ -104,7 +104,6 @@ namespace Consul
         public override void Write(Utf8JsonWriter writer, HealthStatus value, JsonSerializerOptions options)
         {
             writer.WriteStringValue(value.Status);
-            throw new NotImplementedException();
         }
     }
 
