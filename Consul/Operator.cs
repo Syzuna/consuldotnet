@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -118,7 +119,7 @@ namespace Consul
         /// </summary>
         private class KeyringRequest
         {
-            //[JsonProperty]
+            [JsonInclude]
             internal string Key { get; set; }
         }
 

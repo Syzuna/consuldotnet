@@ -21,6 +21,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System;
+using System.Text.Json.Serialization;
 
 namespace Consul
 {
@@ -43,7 +44,7 @@ namespace Consul
     {
         private class EventCreationResult
         {
-            //[JsonProperty]
+            [JsonInclude]
             internal string ID { get; set; }
         }
 
